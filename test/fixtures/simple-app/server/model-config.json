@@ -1,0 +1,85 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models",
+      "component-storage/common/models",
+      "../../../../common/models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins",
+      "../../../../lib/mixins"
+    ]
+  },
+
+  "user": {
+    "dataSource": "db",
+    "public": true
+  },
+  "accessToken": {
+    "dataSource": "db",
+    "public": true
+  },
+
+  "ACL": {
+    "dataSource": "db",
+    "public": true
+  },
+  "RoleMapping": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Role": {
+    "dataSource": "db",
+    "public": true
+  },
+  "container": {
+    "dataSource": "storage",
+    "public": true
+  },
+  "files": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Post": {
+    "dataSource": "db",
+    "public": true
+  },
+  "PostLike": {
+    "dataSource": "db",
+    "public": true
+  },
+  "PostMention": {
+    "dataSource": "db",
+    "public": true
+  },
+  "PostShare": {
+    "dataSource": "db",
+    "public": true
+  },
+  "PostComment": {
+    "dataSource": "db",
+    "public": true
+  },
+  "CommentComment": {
+    "dataSource": "db",
+    "public": true
+  },
+  "PostMedia": {
+    "dataSource": "db",
+    "public": true
+  },
+  "PostLike": {
+    "dataSource": "db",
+    "public": true
+  },
+  "BlogReported": {
+    "dataSource": "db",
+    "public": true
+  }
+}

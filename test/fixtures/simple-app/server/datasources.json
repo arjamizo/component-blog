@@ -1,0 +1,38 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory",
+    "file": "blog-db.json"
+  },
+  "storage": {
+    "name": "storage",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "../../../test/fixtures/simple-app/server/storage",
+    "maxFileSize": "52428800",
+    "nameConflict": "makeUnique"
+  },
+  "postBlogMedia": {
+    "name": "postBlogMedia",
+    "connector": "rest",
+    "operations": [
+      {
+        "template": {
+          "method": "POST",
+          "url": "http://localhost:3000/api/containers/blog-media/upload",
+          "headers": {
+            "accepts": "multipart/form-data",
+            "content-type": "multipart/form-data"
+          },
+          "buffer": true,
+          "form": {
+            "file": "{^file}"
+          }
+        },
+        "functions": {
+          "upload": ["file"]
+        }
+      }
+    ]
+  }
+}

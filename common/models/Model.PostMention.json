@@ -1,0 +1,80 @@
+{
+  "name": "PostMention",
+  "base": "PersistedModel",
+  "indexes": {},
+  "plural": "post-mention",
+  "strict": "filter",
+  "idInjection": false,
+  "forceId": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "replaceOnPUT": true,
+  "properties": {
+    "mention": {
+      "type": "String",
+      "required": true
+    },
+    "createdAt": {
+      "type": "Date",
+      "required": true
+    },
+    "deletedAt": {
+      "type": "Date"
+    },
+    "deletedBy": {
+      "type": "String"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "userMentioned": {
+      "type": "belongsTo",
+      "model": "WeflexUser",
+      "foreignKey": "mention",
+      "options": {
+        "validate": true
+      }
+    },
+    "userDeleted": {
+      "type": "belongsTo",
+      "model": "WeflexUser",
+      "foreignKey": "deletedBy",
+      "options": {
+        "validate": true
+      }
+    },
+    "post": {
+      "type": "belongsTo",
+      "model": "Post",
+      "foreignKey": "postId",
+      "options": {
+        "validate": true,
+        "forceId": false
+      }
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    }
+  ],
+  "mixins": {
+    "StoreRelatedModel": true
+  }
+}

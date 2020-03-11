@@ -1,0 +1,97 @@
+{
+  "name": "BlogReported",
+  "base": "PersistedModel",
+  "indexes": {},
+  "plural": "blog-reported",
+  "strict": "filter",
+  "idInjection": false,
+  "forceId": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "replaceOnPUT": true,
+  "properties": {
+    "reportedContent": {
+      "type": "String",
+      "required": true
+    },
+    "contentId": {
+      "type": "String",
+      "required": true
+    },
+    "reportedBy": {
+      "type": "String",
+      "required": true
+    },
+    "createdAt": {
+      "type": "Date",
+      "required": true
+    },
+    "modifiedAt": {
+      "type": "Date"
+    },
+    "status": {
+      "type": "String",
+      "required": true,
+      "default": "pending"
+    },
+    "penaltyType": {
+      "type": "String",
+      "required": true,
+      "default": "none"
+    },
+    "penalty": {
+      "type": "String",
+      "required": true,
+      "default": "none"
+    },
+    "deletedAt": {
+      "type": "Date"
+    },
+    "deletedBy": {
+      "type": "String"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "userReported": {
+      "type": "belongsTo",
+      "model": "WeflexUser",
+      "foreignKey": "reportedBy",
+      "options": {
+        "validate": true
+      }
+    },
+    "userModified": {
+      "type": "belongsTo",
+      "model": "WeflexUser",
+      "foreignKey": "modifiedBy",
+      "options": {
+        "validate": true
+      }
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    }
+  ],
+  "mixins": {
+    "StoreRelatedModel": true
+  }
+}
