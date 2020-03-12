@@ -1,9 +1,9 @@
 /* eslint no-console: 0 */
-
+require('cls-hooked');
 const loopback = require('loopback');
 const boot = require('loopback-boot');
 var bodyParser = require('body-parser');
-var multer = require('multer');
+const multer = require('multer');
 const app = module.exports =  loopback();
 
 app.use(bodyParser.json({strict: false, limit: '50mb'})); // for parsing application/json

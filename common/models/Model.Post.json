@@ -3,7 +3,7 @@
   "base": "PersistedModel",
   "indexes": {},
   "plural": "post",
-  "strict": false,
+  "strict": "filter",
   "idInjection": false,
   "forceId": true,
   "options": {
@@ -12,11 +12,11 @@
   "replaceOnPUT": true,
   "properties": {
     "postTitle": {
-      "type": "String",
+      "type": "string",
       "required": true
     },
     "postType": {
-      "type": "String",
+      "type": "string",
       "required": true
     },
     "postText": {
@@ -84,7 +84,7 @@
       "model": "PostMedia",
       "foreignKey": "postId",
       "options": {
-        "validate": false
+        "validate": true
       }
     }
   },

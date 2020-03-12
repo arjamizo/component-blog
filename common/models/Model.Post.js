@@ -1,7 +1,6 @@
 
 const jugglerUtils = require('loopback-datasource-juggler/lib/utils');
-const multer = require('multer');
-const upload = multer();
+const request = require('superagent');
 
 /**
  * Merge include options of default scope with runtime include option.
@@ -18,7 +17,7 @@ module.exports = function(Model) {
 
   Model.once('attached', (a) => {
     app = a;
-    const container = app.models.container;
+    const router = app.loopback.Router();
     const settings = app.settings;
     const deleteById = Model.deleteById;
 
@@ -148,30 +147,50 @@ module.exports = function(Model) {
       next();
     });
 
-    Model.afterRemote('create', async(ctx, _, next) => {
+    Model.afterRemote('create', async(ctx, instance, next) => {
       try {
         let res = await saveMedia(ctx);
+
         console.log(res);
-        next();
       } catch (err) {
         console.log(err);
       }
     });
 
     async function saveMedia(ctx) {
-      const saveMediaService = Model.app.dataSources.postBlogMedia;
-      try {
-        const promises = [];
-        console.log(ctx.req);
-        ctx.req.files.forEach(f => {
-          promises.push(saveMediaService.upload(f.buffer));
+      const blogConfig = settings['component-blog'];
+      const url = `${blogConfig['baseUrl']}${blogConfig['uploadMediaUrl']}`;
+
+      console.log('Image upload complete, creating request to: ' + url);
+      console.log(ctx.req.files);
+      return await request
+        .post(url)
+        .attach('file', ctx.req.files[0].buffer, ctx.req.files[0].originalname)
+        .then((err, response) => {
+          console.log('Request complete');
+          if (err) console.log('Request err: ', err);
+          return response;
         });
-        const res = await Promise.all(promises);
-        console.log(res);
-        return res;
-      } catch (err) {
-        return err;
-      }
     }
+
+    Model.incoming = function(req, cb) {
+      console.log(req);
+      // the files are available as req.files.
+      // the body fields are available in req.body
+      cb(null, 'Hey there, ' + req.body.sender);
+    };
+
+    Model.remoteMethod(
+      'incoming',
+      {
+        accepts: [
+          {
+            arg: 'req', type: 'object', http: function(ctx) {
+              return ctx.req;
+            },
+          }],
+        returns: {arg: 'summary', type: 'string'},
+      }
+    );
   });
 };

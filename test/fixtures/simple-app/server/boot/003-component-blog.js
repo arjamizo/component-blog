@@ -1,15 +1,16 @@
 
-module.exports = function storage(app) {
-  var storage = require('../../../../../lib');
+module.exports = function blog(app) {
+  var blog = require('../../../../../lib');
 
   var options = {
     // custom user model
     userModel: 'user', // specify your custom user model
+    uploadMediaUrl: '/api/containers/blog-media/upload',
+    baseUrl: 'http://0.0.0.0:3000',
 
-    // used by modelBuilder, component-issue-handler/lib/models/index.js
     // Data source for metadata persistence
     dataSource: app.dataSources.db,
   };
   app.set('component-blog', options);
-  storage(app, options);
+  blog(app, options);
 };

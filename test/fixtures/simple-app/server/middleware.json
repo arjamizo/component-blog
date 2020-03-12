@@ -7,6 +7,14 @@
     }
   },
   "initial": {
+    "compression": {},
+    "cors": {
+      "params": {
+        "origin": true,
+        "credentials": true,
+        "maxAge": 86400
+      }
+    },
     "loopback-context#per-request": {
       "params": {
         "enableHttpContext": true
@@ -15,7 +23,10 @@
   },
   "session": {},
   "auth": {},
-  "parse": {},
+  "parse": {
+    "body-parser#json": {}
+
+  },
   "routes": {
     "loopback#rest": {
       "paths": [
